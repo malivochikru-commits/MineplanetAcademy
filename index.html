@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy</title>
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #81C784;
+            --secondary-color: #26A69A;
+            --accent-color: #66BB6A;
+            --background-color: #f5f8f5;
+            --surface-color: #ffffff;
+            --text-primary: #2E7D32;
+            --text-secondary: #4CAF50;
+            --text-muted: #666666;
+            --border-color: #e8f5e8;
+            --shadow-color: rgba(76, 175, 80, 0.1);
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme colors */
+            --primary-color: #66BB6A;
+            --primary-dark: #4CAF50;
+            --primary-light: #81C784;
+            --secondary-color: #4DB6AC;
+            --accent-color: #81C784;
+            --background-color: #1a1a1a;
+            --surface-color: #2d2d2d;
+            --text-primary: #81C784;
+            --text-secondary: #66BB6A;
+            --text-muted: #b0b0b0;
+            --border-color: #404040;
+            --shadow-color: rgba(102, 187, 106, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 23px 0 0;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo::before {
+            content: "MP";
+            background: white;
+            color: var(--primary-color);
+            padding: 9px;
+            border-radius: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        /* Added theme toggle button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-menu {
+            background: var(--primary-dark);
+            padding: 12px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 40px;
+        }
+
+        /* Navigation dropdown system */
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            border-bottom-color: var(--accent-color);
+        }
+
+        .nav-item.active {
+            border-bottom-color: var(--accent-color);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--surface-color);
+            min-width: 200px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-item:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-dropdown-item {
+            display: block;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .nav-dropdown-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .nav-dropdown-item:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .nav-dropdown-item:hover {
+            background-color: var(--border-color);
+            color: var(--primary-color);
+        }
+
+        /* Removed sub-nav section completely */
+
+        /* Removed dropdown menu styles and added sub-nav back */
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            border-bottom-color: white;
+        }
+
+        .nav-item.active {
+            border-bottom-color: white;
+        }
+
+        /* Added sub-nav styles back */
+        .sub-nav {
+            margin-top: 20px;
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .sub-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .sub-nav-item {
+            padding: 16px 24px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sub-nav-item:hover {
+            color: var(--primary-color);
+            background-color: var(--border-color);
+        }
+
+        .sub-nav-item.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background-color: var(--border-color);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--surface-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            height: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .student-profile {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-color));
+            color: white;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .student-details h3 {
+            font-size: 16px;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .student-details p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Updated date navigation for schedule slider */
+        .date-nav {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--surface-color);
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .date-arrow {
+            background: var(--primary-color);
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .date-arrow:hover {
+            background: var(--primary-dark);
+        }
+
+        .current-date {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        /* Removed vertical scroll and created horizontal slider for schedule */
+        .schedule-container {
+            position: relative;
+            overflow: hidden;
+            padding: 16px;
+            background: var(--surface-color);
+        }
+
+        .schedule-slider {
+            display: flex;
+            transition: transform 0.3s ease;
+            width: 700%; /* 7 days */
+        }
+
+        .schedule-day {
+            width: calc(100% / 7);
+            flex-shrink: 0;
+            padding-right: 16px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .time-slot {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .time-slot.orange { background: #FF9800; }
+        .time-slot.green { background: #4CAF50; }
+        .time-slot.teal { background: #009688; }
+        .time-slot.purple { background: #9C27B0; }
+        .time-slot.red { background: #f44336; }
+
+        .subject-info h4 {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .subject-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .no-lessons {
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        /* Grades Slider */
+        .grades-section {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--surface-color);
+        }
+
+        .grades-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .grades-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .grades-slider-container {
+            position: relative;
+            overflow: hidden;
+            padding: 4px 0;
+        }
+
+        .grades-slider {
+            display: flex;
+            gap: 8px;
+            transition: transform 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .grade-item {
+            min-width: 60px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .grade-item.excellent {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .grade-item.good {
+            background: linear-gradient(135deg, var(--secondary-color), #00796B);
+        }
+
+        .grade-item.satisfactory {
+            background: linear-gradient(135deg, #FFA726, #FF8F00);
+        }
+
+        .grade-item.poor {
+            background: linear-gradient(135deg, #EF5350, #D32F2F);
+        }
+
+        .grade-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .grade-subject {
+            font-size: 10px;
+            opacity: 0.9;
+            line-height: 1;
+        }
+
+        /* Updated grades slider navigation logic and added posts slider styles */
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            z-index: 10;
+            color: white;
+        }
+
+        .slider-nav:hover {
+            opacity: 1;
+        }
+
+        .slider-nav.prev {
+            left: -8px;
+        }
+
+        .slider-nav.next {
+            right: -8px;
+        }
+
+        .slider-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .grades-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Added posts slider container and navigation */
+        .posts-slider-container {
+            position: relative;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .posts-slider {
+            transition: transform 0.3s ease;
+        }
+
+        .posts-nav {
+            position: absolute;
+            right: 20px;
+            background: rgba(33, 150, 243, 0.9);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .posts-nav:hover {
+            background: rgba(33, 150, 243, 1);
+            transform: scale(1.1);
+        }
+
+        .posts-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .posts-nav.up {
+            top: 20px;
+        }
+
+        .posts-nav.down {
+            bottom: 20px;
+        }
+
+        /* Main Content Area */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .news-card {
+            margin: 10px 0;
+            background: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-icon {
+            width: 40px;
+            height: 40px;
+            background: #E91E63;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .news-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .news-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .news-content {
+            padding: 16px;
+        }
+
+        .news-text {
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .news-banner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #3f51b5, #2196f3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .comments-section {
+            border-top: 1px solid var(--border-color);
+            padding: 16px;
+        }
+
+        .comments-count {
+            color: var(--primary-color);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .comment {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .comment-time {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .comment-text {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .add-comment {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .add-comment input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+            background: var(--surface-color);
+            color: var(--text-primary);
+        }
+
+        .add-comment input:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Added content sections for different pages */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Added grades table styles */
+        .grades-table-container {
+            background: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .grades-table-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .grades-table-header h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .grades-table-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grades-table th,
+        .grades-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .grades-table th {
+            background: var(--border-color);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .grades-table td {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .grades-table tr:hover {
+            background: var(--border-color);
+        }
+
+        .grade-cell {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .grade-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .grade-badge.excellent { background: var(--primary-color); }
+        .grade-badge.good { background: var(--secondary-color); }
+        .grade-badge.satisfactory { background: #FF9800; }
+        .grade-badge.poor { background: #f44336; }
+
+        .average-score {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .average-score.excellent { color: var(--primary-color); }
+        .average-score.good { color: var(--secondary-color); }
+        .average-score.satisfactory { color: #FF9800; }
+        .average-score.poor { color: #f44336; }
+
+        /* Added student list styles */
+        .student-list-container {
+            background: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            max-height: 80vh; /* Added for scrollable content */
+            border: 1px solid var(--border-color);
+        }
+
+        /* Improved student list header styling */
+        .student-list-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .student-list-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .student-list-header h2 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .student-list-header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .student-list-content { /* Added for scrollable content */
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .student-list-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .student-list-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .student-list-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .student-list-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .student-item:hover {
+            background: var(--border-color);
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 16px;
+        }
+
+        .student-details {
+            flex: 1;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .student-class {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Enhanced student item styling with better colors */
+        .student-average.excellent {
+            color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .student-average.good {
+            color: var(--secondary-color);
+            background: rgba(33, 150, 243, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .student-average.satisfactory {
+            color: #FF9800;
+            background: rgba(255, 152, 0, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 2px solid #FF9800;
+        }
+
+        .student-average {
+            font-weight: bold;
+            font-size: 18px;
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-items {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .sub-nav-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">Academy</div>
+            <div class="header-right">
+                <!-- Added theme toggle button -->
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">Темная</span>
+                </button>
+                <span>Ученик</span>
+                <span>Вход</span>
+            </div>
+        </div>
+        
+         <!-- Removed duplicate navigation menu -->
+         <!-- Updated sub-nav with original dropdown items -->
+        <div class="sub-nav">
+            <div class="sub-nav-container">
+                <a href="#" class="sub-nav-item active" onclick="showSection('personal-cabinet')">Личный кабинет</a>
+                <a href="#" class="sub-nav-item" onclick="showSection('student-list')">Список учеников</a>
+                <a href="#" class="sub-nav-item" onclick="showSection('grades-table')">Оценки</a>
+                <a href="#" class="sub-nav-item" onclick="showSection('news-section')">Новости</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="student-profile">
+                <div class="student-info">
+                    <div class="student-avatar">MX</div>
+                    <div class="student-details">
+                        <h3>MalivochikX</h3>
+                        <p>Группа A1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moving grades section above schedule -->
+            <div class="grades-section">
+                <div class="grades-header">
+                    <div class="grades-title">Оценки</div>
+                </div>
+                <div class="grades-slider-container">
+                    <button class="slider-nav prev" onclick="slideGrades(-1)">‹</button>
+                    <div class="grades-slider" id="gradesSlider">
+                        <div class="grade-item excellent">
+                            <div class="grade-value">5</div>
+                            <div class="grade-subject">История ВА</div>
+                        </div>
+                        <div class="grade-item good">
+                            <div class="grade-value">4</div>
+                            <div class="grade-subject">История сервера</div>
+                        </div>
+                        <div class="grade-item excellent">
+                            <div class="grade-value">5</div>
+                            <div class="grade-subject">Обучения ВА</div>
+                        </div>
+                        <div class="grade-item good">
+                            <div class="grade-value">4</div>
+                            <div class="grade-subject">История сервера</div>
+                        </div>
+                        <div class="grade-item good">
+                            <div class="grade-value">4</div>
+                            <div class="grade-subject">История сервера</div>
+                        </div>
+                        <div class="grade-item good">
+                            <div class="grade-value">4</div>
+                            <div class="grade-subject">История сервера</div>
+                        </div>
+                    </div>
+                    <button class="slider-nav next" onclick="slideGrades(1)">›</button>
+                </div>
+            </div>
+
+            <!-- Updated date navigation with day slider functionality -->
+            <div class="date-nav">
+                <div class="date-display">
+                    <button class="date-arrow" onclick="changeDay(-1)">‹</button>
+                    <span class="current-date" id="currentDate">27 сент, суббота</span>
+                    <button class="date-arrow" onclick="changeDay(1)">›</button>
+                </div>
+            </div>
+
+            <!-- Updated schedule with only 3 specific subjects -->
+            <div class="schedule-container">
+                <div class="schedule-slider" id="scheduleSlider">
+                     <!-- Monday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Основы управления и администрирования</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot orange">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Развитие серверных технологий</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot green">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Методики обучения администраторов</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Tuesday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot green">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Структура административных систем</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Архитектура современных серверов</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot orange">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Практические навыки администрирования</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Wednesday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot red">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Эволюция административных процессов</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Безопасность серверных систем</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot green">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Контрольная работа по администрированию</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Thursday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot purple">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Современные тенденции в управлении</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot green">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Облачные технологии и виртуализация</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Семинар по лидерству</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Friday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Итоговое занятие по курсу</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot orange">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Презентация проектов</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time-slot green">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Экзамен по администрированию</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Saturday -->
+                    <div class="schedule-day">
+                        <div class="schedule-item">
+                            <div class="time-slot">8:30 - 9:15</div>
+                            <div class="subject-info">
+                                <h4>История высшей администрации</h4>
+                                <p>Дополнительные консультации</p>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="time-slot orange">9:20 - 10:05</div>
+                            <div class="subject-info">
+                                <h4>История сервера</h4>
+                                <p>Лабораторная работа №3</p>
+                                <small>Настройка сервера</small>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="time-slot green">10:10 - 10:55</div>
+                            <div class="subject-info">
+                                <h4>Обучения ВА</h4>
+                                <p>Практическое задание</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Sunday -->
+                    <div class="schedule-day">
+                        <div class="no-lessons">
+                            <p>Выходной день</p>
+                            <p>Занятий нет</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+             <!-- Added posts slider container with navigation buttons -->
+            <div class="content-section" id="news-section">
+                <div class="posts-slider-container">
+                    <button class="posts-nav up" onclick="slidePosts(-1)" id="postsUpBtn">↑</button>
+                    <button class="posts-nav down" onclick="slidePosts(1)" id="postsDownBtn">↓</button>
+                    
+                    <div class="posts-slider" id="postsSlider">
+                         <!-- Added more news articles for better slider functionality -->
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="news-card">
+                            <div class="news-header">
+                                <div class="news-icon">📰</div>
+                                <div class="news-title">MinePlanet Academy</div>
+                                <div class="news-date">29 авг. в 18:36</div>
+                            </div>
+                            
+                            <div class="news-content">
+                                <p class="news-text">
+                                    Сдесь будут появлятся новости!
+                                </p>
+                            </div>
+                        </article>
+
+                        
+                    </div>
+                </div>
+            </div>
+
+             <!-- Added personal cabinet section -->
+            <div class="content-section active" id="personal-cabinet">
+                <div class="grades-table-container">
+                    <div class="grades-table-header">
+                        <h2>Личный кабинет</h2>
+                        <p>MalivochikX - Группа A1</p>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                            <div style="background: var(--border-color); padding: 20px; border-radius: 8px; text-align: center;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 10px;">Посещаемость Уроков</h3>
+                                <div style="font-size: 36px; font-weight: bold; color: var(--primary-color);">98%</div>
+                            </div>
+                            <div style="background: var(--border-color); padding: 20px; border-radius: 8px; text-align: center;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 10px;">Всего оценок</h3>
+                                <div style="font-size: 36px; font-weight: bold; color: #FF9800;">47</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Added student list section -->
+            <div class="content-section" id="student-list">
+                <div class="student-list-container">
+                    <div class="student-list-header">
+                        <h2>Список учеников</h2>
+                        <p>Всего учеников: 10</p>
+                    </div>
+                    <div class="student-list-content">
+
+                        <div class="student-item">
+                            <div class="student-number">1</div>
+                            <div class="student-details">
+                                <div class="student-name">Darylmill</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">2</div>
+                            <div class="student-details">
+                                <div class="student-name">MalivochikX</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">3</div>
+                            <div class="student-details">
+                                <div class="student-name">NataliJer</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">4</div>
+                            <div class="student-details">
+                                <div class="student-name">KillasBoom</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">5</div>
+                            <div class="student-details">
+                                <div class="student-name">Sp1xee</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">6</div>
+                            <div class="student-details">
+                                <div class="student-name">NightEmpress</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">7</div>
+                            <div class="student-details">
+                                <div class="student-name">Abobus</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">8</div>
+                            <div class="student-details">
+                                <div class="student-name">Makan</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">9</div>
+                            <div class="student-details">
+                                <div class="student-name">Кобяков</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+
+                        <div class="student-item">
+                            <div class="student-number">10</div>
+                            <div class="student-details">
+                                <div class="student-name">Бабка из 10 подьезда</div>
+                                <div class="student-class">Группа A1</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+             <!-- Added grades table section -->
+            <div class="content-section" id="grades-table">
+                <div class="grades-table-container">
+                    <div class="grades-table-header">
+                        <h2>Оценки</h2>
+                        <p>MalivochikX - Группа A1 • Текущий семестр</p>
+                    </div>
+                    <table class="grades-table">
+                        <thead>
+                            <tr>
+                                <th>Предмет</th>
+                                <th>Оценки</th>
+                                <th>Итоговый балл</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- Предмет -->
+                                <td>История Высшей Администрации</td>
+                                <td>
+                                    <!-- Баллы -->
+                                    <div class="grade-cell">
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge good">4</div>
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge good">4</div>
+                                    </div>
+                                </td>
+                                 <!-- Итоговые баллы -->
+                                <td><span class="average-score excellent">4.6</span></td>
+                            </tr>
+                            <tr>
+                                <!-- Предмет -->
+                                <td>История Сервера</td>
+                                <td>
+                                    <!-- Баллы -->
+                                    <div class="grade-cell">
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge good">4</div>
+                                        <div class="grade-badge excellent">5</div>
+                                    </div>
+                                </td>
+                                <!-- Итоговые баллы -->
+                                <td><span class="average-score excellent">4.8</span></td>
+                            </tr>
+                            <tr>
+                                <!-- Предмет -->
+                                <td>Знания ВА</td>
+                                <td>
+                                    <!-- Баллы -->
+                                    <div class="grade-cell">
+                                        <div class="grade-badge good">4</div>
+                                        <div class="grade-badge good">4</div>
+                                        <div class="grade-badge excellent">5</div>
+                                        <div class="grade-badge good">4</div>
+                                        <div class="grade-badge good">4</div>
+                                    </div>
+                                </td>
+                                 <!-- Итоговые баллы -->
+                                <td><span class="average-score good">4.2</span></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentGradePosition = 0;
+        const gradeSlideWidth = 68; // 60px width + 8px gap
+        const visibleGradeItems = 4;
+
+        function slideGrades(direction) {
+            const slider = document.getElementById('gradesSlider');
+            const totalItems = slider.children.length;
+            const maxPosition = Math.max(0, totalItems - visibleGradeItems);
+            
+            currentGradePosition += direction;
+            
+            // Proper boundary checks
+            if (currentGradePosition < 0) {
+                currentGradePosition = 0;
+            } else if (currentGradePosition > maxPosition) {
+                currentGradePosition = maxPosition;
+            }
+            
+            const translateX = -currentGradePosition * gradeSlideWidth;
+            slider.style.transform = `translateX(${translateX}px)`;
+            
+            // Update button states
+            updateGradeButtons(maxPosition);
+        }
+
+        function updateGradeButtons(maxPosition) {
+            const prevBtn = document.querySelector('.grades-slider-container .prev');
+            const nextBtn = document.querySelector('.grades-slider-container .next');
+            
+            // Enable/disable buttons based on position
+            prevBtn.disabled = currentGradePosition <= 0;
+            nextBtn.disabled = currentGradePosition >= maxPosition;
+            
+            // Update visual state
+            prevBtn.style.opacity = currentGradePosition <= 0 ? '0.3' : '0.7';
+            nextBtn.style.opacity = currentGradePosition >= maxPosition ? '0.3' : '0.7';
+        }
+
+        let currentPostIndex = 0;
+        const totalPosts = 8; // Increased number of posts
+
+        function slidePosts(direction) {
+            const slider = document.getElementById('postsSlider');
+            const upBtn = document.getElementById('postsUpBtn');
+            const downBtn = document.getElementById('postsDownBtn');
+            
+            const newsCards = slider.querySelectorAll('.news-card');
+            if (newsCards.length === 0) return;
+            
+            const cardHeight = newsCards[0].offsetHeight + 20; // Add margin
+            const containerHeight = slider.parentElement.offsetHeight;
+            const maxScroll = Math.max(0, slider.scrollHeight - containerHeight);
+            
+            let currentScroll = parseInt(slider.style.transform.replace('translateY(', '').replace('px)', '')) || 0;
+            currentScroll = Math.abs(currentScroll);
+            
+            // Move by one card height
+            currentScroll += direction * cardHeight;
+            
+            // Boundary checks
+            if (currentScroll < 0) {
+                currentScroll = 0;
+            } else if (currentScroll > maxScroll) {
+                currentScroll = maxScroll;
+            }
+            
+            // Apply smooth transform
+            slider.style.transform = `translateY(-${currentScroll}px)`;
+            
+            // Update button states
+            upBtn.disabled = currentScroll === 0;
+            downBtn.disabled = currentScroll >= maxScroll;
+        }
+
+        function initializePostsSlider() {
+            const upBtn = document.getElementById('postsUpBtn');
+            const downBtn = document.getElementById('postsDownBtn');
+            
+            if (upBtn && downBtn) {
+                upBtn.disabled = true; // Start at first post
+                downBtn.disabled = false;
+            }
+        }
+
+        // Auto-hide navigation buttons if all items are visible
+        window.addEventListener('load', function() {
+            showSection('personal-cabinet');
+            
+            // Initialize grade slider
+            const gradeSlider = document.getElementById('gradesSlider');
+            const gradeContainer = gradeSlider.parentElement;
+            const gradePrevBtn = gradeContainer.querySelector('.prev');
+            const gradeNextBtn = gradeContainer.querySelector('.next');
+            
+            const totalGradeItems = gradeSlider.children.length;
+            const maxGradePosition = Math.max(0, totalGradeItems - visibleGradeItems);
+            
+            if (totalGradeItems <= visibleGradeItems) {
+                gradePrevBtn.style.display = 'none';
+                gradeNextBtn.style.display = 'none';
+            } else {
+                updateGradeButtons(maxGradePosition);
+            }
+            
+            // Initialize posts slider
+            initializePostsSlider();
+            
+            // Initialize schedule
+            updateScheduleDisplay();
+        });
+
+        let currentDay = 5; // Saturday (0 = Monday, 6 = Sunday)
+        const days = [
+            'понедельник',
+            'вторник', 
+            'среда',
+            'четверг',
+            'пятница',
+            'суббота',
+            'воскресенье'
+        ];
+        const dates = [
+            '23 сент',
+            '24 сент',
+            '25 сент', 
+            '26 сент',
+            '27 сент',
+            '28 сент',
+            '29 сент'
+        ];
+
+        function changeDay(direction) {
+            currentDay += direction;
+            
+            if (currentDay < 0) {
+                currentDay = 6;
+            } else if (currentDay > 6) {
+                currentDay = 0;
+            }
+            
+            updateScheduleDisplay();
+        }
+
+        function updateScheduleDisplay() {
+            const scheduleSlider = document.getElementById('scheduleSlider');
+            const currentDate = document.getElementById('currentDate');
+            
+            // Update date display
+            currentDate.textContent = `${dates[currentDay]}, ${days[currentDay]}`;
+            
+            // Slide to current day
+            const translateX = -currentDay * (100 / 7);
+            scheduleSlider.style.transform = `translateX(${translateX}%)`;
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            updateScheduleDisplay();
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update sub-nav active state instead of main nav
+            const subNavItems = document.querySelectorAll('.sub-nav-item');
+            subNavItems.forEach(item => item.classList.remove('active'));
+            
+            // Find and activate the corresponding sub-nav item
+            const activeSubNavItem = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+            if (activeSubNavItem) {
+                activeSubNavItem.classList.add('active');
+            }
+        }
+
+        document.querySelector('.logo').addEventListener('click', function() {
+            showSection('personal-cabinet'); // Changed default section to personal-cabinet
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Темная';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Светлая';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Светлая';
+            }
+            
+            // Show personal cabinet by default
+            showSection('personal-cabinet');
+        });
+    </script>
+</body>
+</html>
