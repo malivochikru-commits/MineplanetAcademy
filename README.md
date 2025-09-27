@@ -1,0 +1,2 @@
+# MineplanetAcademy
+MineplanetAcademy school
