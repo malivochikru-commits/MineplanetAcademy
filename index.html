@@ -180,8 +180,9 @@
             z-index: 1100;
         }
         .bottom-nav-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -489,11 +490,11 @@
         .posts-slider-container {
             position: relative;
             max-height: 80vh;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
         .posts-slider {
-            transition: transform 0.3s ease;
+            transition: none;
         }
 
         .posts-nav {
@@ -535,6 +536,67 @@
             bottom: 20px;
         }
 
+        /* Materials (Материалы) section */
+        .materials-container {
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .materials-list {}
+
+        .material-card {
+            margin: 10px 0;
+            background: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        .material-meta {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+        }
+        .material-meta-item {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .material-meta-item strong { color: var(--text-primary); }
+        .material-content {
+            padding: 16px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            position: relative;
+        }
+        .material-content.collapsed {
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* show 4 lines when collapsed */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .material-content.collapsed::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 48px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0), var(--surface-color));
+        }
+        .show-more-btn {
+            margin: 0 16px 16px 16px;
+            background: var(--border-color);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s ease;
+        }
+        .show-more-btn:hover { background: rgba(0,0,0,0.05); }
         .content-area {
             display: flex;
             flex-direction: column;
@@ -615,6 +677,7 @@
         .content-section {
             display: none;
             animation: fadeIn 0.3s ease;
+            padding-bottom: 40px; /* space above bottom nav across all sections */
         }
 
         .content-section.active {
@@ -976,6 +1039,7 @@
                 bottom: 15px;
             }
 
+
             /* Show bottom nav on mobile and reserve space */
             .bottom-nav { display: block; }
             body { padding-bottom: 64px; }
@@ -1196,6 +1260,7 @@
             .posts-nav.down {
                 bottom: 10px;
             }
+            body { padding-bottom: 64px; }
         }
 
         /* Extra small phones */
@@ -1382,6 +1447,7 @@
                 <a href="#/personal-cabinet" class="sub-nav-item active" onclick="showSection('personal-cabinet')">Личный кабинет</a>
                 <a href="#/student-list" class="sub-nav-item" onclick="showSection('student-list')">Список учеников</a>
                 <a href="#/grades-table" class="sub-nav-item" onclick="showSection('grades-table')">Оценки</a>
+                <a href="#/materials" class="sub-nav-item" onclick="showSection('materials')">Материалы</a>
                 <a href="#/news-section" class="sub-nav-item" onclick="showSection('news-section')">Новости</a>
             </div>
         </div>
@@ -1606,8 +1672,7 @@
         <main class="content-area">
             <div class="content-section" id="news-section">
                 <div class="posts-slider-container">
-                    <button class="posts-nav up" onclick="slidePosts(-1)" id="postsUpBtn">↑</button>
-                    <button class="posts-nav down" onclick="slidePosts(1)" id="postsDownBtn">↓</button>
+                    
                     
                     <div class="posts-slider" id="postsSlider">
                         <article class="news-card">
@@ -1707,17 +1772,94 @@
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                             <div style="background: var(--border-color); padding: 20px; border-radius: 8px; text-align: center;">
                                 <h3 style="color: var(--primary-color); margin-bottom: 10px;">Посещаемость Уроков</h3>
-                                <div style="font-size: 36px; font-weight: bold; color: var(--primary-color);">-5%</div>
+                                <div style="font-size: 36px; font-weight: bold; color: var(--primary-color);">98%</div>
                             </div>
                             <div style="background: var(--border-color); padding: 20px; border-radius: 8px; text-align: center;">
                                 <h3 style="color: var(--primary-color); margin-bottom: 10px;">Всего оценок</h3>
-                                <div style="font-size: 36px; font-weight: bold; color: #FF9800;">Дохрена</div>
+                                <div style="font-size: 36px; font-weight: bold; color: #FF9800;">47</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="content-section" id="materials">
+                <div class="grades-table-container">
+                    <div class="grades-table-header">
+                        <h2>Материалы</h2>
+                        <p>Учебные материалы по предметам</p>
+                    </div>
+                    <div class="materials-container">
+                        <div class="materials-list" id="materialsList">
+                            <article class="material-card">
+                                <div class="material-meta">
+                                    <div class="material-meta-item"><strong>Предмет:</strong> Знания ВА</div>
+                                    <div class="material-meta-item"><strong>Выложил:</strong> Darylmill</div>
+                                    <div class="material-meta-item"><strong>Тема:</strong> Знания ВА</div>
+                                    <div class="material-meta-item"><strong>Дата:</strong> 27 сент</div>
+                                </div>
+                                <div class="material-content collapsed">
+                                    Учи правила йопта
+                                </div>
+                                <button class="show-more-btn" onclick="toggleMaterial(this)">Показать все</button>
+                            </article>
+
+                            <article class="material-card">
+                                <div class="material-meta">
+                                    <div class="material-meta-item"><strong>Предмет:</strong> История Сервера</div>
+                                    <div class="material-meta-item"><strong>Выложил:</strong> MalivochikX</div>
+                                    <div class="material-meta-item"><strong>Тема:</strong> Архитектура и развитие</div>
+                                    <div class="material-meta-item"><strong>Дата:</strong> 26 сент</div>
+                                </div>
+                                <div class="material-content collapsed">
+                                    Я незнаю что сдесь писать, вот интересная ситуация из моей школы, училка пыталась уебать книгой одноклассника чеченца и уебала моего друга 
+                                </div>
+                                <button class="show-more-btn" onclick="toggleMaterial(this)">Показать все</button>
+                            </article>
+
+                            <article class="material-card">
+                                <div class="material-meta">
+                                    <div class="material-meta-item"><strong>Предмет:</strong> Обучения ВА</div>
+                                    <div class="material-meta-item"><strong>Выложил:</strong> NightEmpress</div>
+                                    <div class="material-meta-item"><strong>Тема:</strong> Практикум и кейсы</div>
+                                    <div class="material-meta-item"><strong>Дата:</strong> 25 сент</div>
+                                </div>
+                                <div class="material-content collapsed">
+                                    Чо
+                                </div>
+                                <button class="show-more-btn" onclick="toggleMaterial(this)">Показать все</button>
+                            </article>
+
+                            <!-- Дополнительные карточки для демонстрации скролла -->
+                            <article class="material-card">
+                                <div class="material-meta">
+                                    <div class="material-meta-item"><strong>Предмет:</strong> Знания ВА</div>
+                                    <div class="material-meta-item"><strong>Выложил:</strong> Darylmill</div>
+                                    <div class="material-meta-item"><strong>Тема:</strong> Чек-листы</div>
+                                    <div class="material-meta-item"><strong>Дата:</strong> 24 сент</div>
+                                </div>
+                                <div class="material-content collapsed">
+                                    Чо
+                                </div>
+                                <button class="show-more-btn" onclick="toggleMaterial(this)">Показать все</button>
+                            </article>
+
+                            <article class="material-card">
+                                <div class="material-meta">
+                                    <div class="material-meta-item"><strong>Предмет:</strong> История Сервера</div>
+                                    <div class="material-meta-item"><strong>Выложил:</strong> KillasBoom</div>
+                                    <div class="material-meta-item"><strong>Тема:</strong> Безопасность</div>
+                                    <div class="material-meta-item"><strong>Дата:</strong> 23 сент</div>
+                                </div>
+                                <div class="material-content collapsed">
+                                    Я крутой
+                                </div>
+                                <button class="show-more-btn" onclick="toggleMaterial(this)">Показать все</button>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="content-section" id="student-list">
                 <div class="student-list-container">
                     <div class="student-list-header">
@@ -1891,6 +2033,12 @@
                 </svg>
                 <span>Оценки</span>
             </a>
+            <a href="#/materials" class="bottom-nav-item" data-section="materials" onclick="showSection('materials')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1v5h5" fill="currentColor"/>
+                </svg>
+                <span>Материалы</span>
+            </a>
             <a href="#/news-section" class="bottom-nav-item" data-section="news-section" onclick="showSection('news-section')">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 5h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 2v12h12V7H6zm2 2h8v2H8V9zm0 4h8v2H8v-2z" fill="currentColor"/>
@@ -1938,43 +2086,55 @@
         let currentPostIndex = 0;
         const totalPosts = 8;
 
-        function slidePosts(direction) {
-            const slider = document.getElementById('postsSlider');
-            const upBtn = document.getElementById('postsUpBtn');
-            const downBtn = document.getElementById('postsDownBtn');
-            
-            const newsCards = slider.querySelectorAll('.news-card');
-            if (newsCards.length === 0) return;
-            
-            const cardHeight = newsCards[0].offsetHeight + 20;
-            const containerHeight = slider.parentElement.offsetHeight;
-            const maxScroll = Math.max(0, slider.scrollHeight - containerHeight);
-            
-            let currentScroll = parseInt(slider.style.transform.replace('translateY(', '').replace('px)', '')) || 0;
-            currentScroll = Math.abs(currentScroll);
-            
-            currentScroll += direction * cardHeight;
-            
-            if (currentScroll < 0) {
-                currentScroll = 0;
-            } else if (currentScroll > maxScroll) {
-                currentScroll = maxScroll;
+        // Posts use native scrolling; no slider arrows needed
+        function initializePostsSlider() {}
+
+        // Materials section logic
+        function toggleMaterial(buttonEl) {
+            const card = buttonEl.closest('.material-card');
+            if (!card) return;
+            const content = card.querySelector('.material-content');
+            if (!content) return;
+            const collapsed = content.classList.contains('collapsed');
+            if (collapsed) {
+                content.classList.remove('collapsed');
+                buttonEl.textContent = 'Скрыть';
+            } else {
+                content.classList.add('collapsed');
+                buttonEl.textContent = 'Показать все';
             }
-            
-            slider.style.transform = `translateY(-${currentScroll}px)`;
-            
-            upBtn.disabled = currentScroll === 0;
-            downBtn.disabled = currentScroll >= maxScroll;
         }
 
-        function initializePostsSlider() {
-            const upBtn = document.getElementById('postsUpBtn');
-            const downBtn = document.getElementById('postsDownBtn');
-            
-            if (upBtn && downBtn) {
-                upBtn.disabled = true;
-                downBtn.disabled = false;
-            }
+        // Show the toggle button only when content exceeds 5 lines
+        function initializeMaterialCardsVisibility() {
+            const MAX_LINES = 4;
+            document.querySelectorAll('.material-card').forEach(card => {
+                const content = card.querySelector('.material-content');
+                const btn = card.querySelector('.show-more-btn');
+                if (!content || !btn) return;
+
+                // Measure full content height without clamping
+                const prevCollapsed = content.classList.contains('collapsed');
+                content.classList.remove('collapsed');
+
+                const lineHeightPx = parseFloat(getComputedStyle(content).lineHeight) || 20;
+                const threshold = (lineHeightPx * MAX_LINES) + 2; // small epsilon
+                const needsClamp = content.scrollHeight > threshold;
+
+                if (needsClamp) {
+                    content.classList.add('collapsed');
+                    btn.style.display = 'inline-block';
+                    btn.textContent = 'Показать все';
+                } else {
+                    content.classList.remove('collapsed');
+                    btn.style.display = 'none';
+                }
+
+                if (prevCollapsed && !needsClamp) {
+                    // ensure button label consistent when clamping not needed
+                    btn.textContent = 'Показать все';
+                }
+            });
         }
 
         let currentDay = 5;
@@ -2129,6 +2289,7 @@
             
             initializePostsSlider();
             updateScheduleDisplay();
+            initializeMaterialCardsVisibility();
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -2158,6 +2319,12 @@
                 if (id) {
                     showSection(id);
                 }
+            });
+            // Re-evaluate visibility on resize (debounced)
+            let _resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(_resizeTimer);
+                _resizeTimer = setTimeout(initializeMaterialCardsVisibility, 150);
             });
         });
 
