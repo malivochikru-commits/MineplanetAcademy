@@ -54,7 +54,7 @@
         .header {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
-            padding: 15px 0 0;
+            padding: 15px 0;
             position: relative;
         }
 
@@ -101,7 +101,7 @@
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 8px;
+            padding: 3px 8px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 18px;
@@ -166,6 +166,42 @@
             border-bottom-color: var(--primary-color);
             background-color: var(--border-color);
         }
+
+        /* Bottom mobile nav */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px var(--shadow-color);
+            display: none; /* hidden by default, shown on mobile */
+            z-index: 1100;
+        }
+        .bottom-nav-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .bottom-nav-item {
+            padding: 8px 6px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .bottom-nav-item svg {
+            width: 22px; height: 22px;
+            display: block;
+        }
+        .bottom-nav-item.active { color: var(--primary-color); }
+        .bottom-nav-item.active svg path { fill: var(--primary-color); }
 
         /* Completely redesigned main container for responsive layout */
         .main-container {
@@ -898,6 +934,7 @@
             
             .sub-nav {
                 margin-top: 10px;
+                display: none; /* hide top sub-nav on mobile */
             }
             
             .sub-nav-item {
@@ -938,6 +975,10 @@
             .posts-nav.down {
                 bottom: 15px;
             }
+
+            /* Show bottom nav on mobile and reserve space */
+            .bottom-nav { display: block; }
+            body { padding-bottom: 64px; }
         }
 
         /* Mobile phones */
@@ -1188,9 +1229,138 @@
                 font-size: 10px;
             }
         }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            z-index: 2000;
+            transition: opacity 0.4s ease;
+        }
+        .preloader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .preloader-card {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 28px 32px;
+            box-shadow: 0 8px 24px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .preloader-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 22px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        .preloader-title {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .preloader-subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .preloader-spinner {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 4px solid rgba(0,0,0,0.08);
+            border-top-color: var(--primary-color);
+            border-right-color: var(--secondary-color);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Interactive smoothing */
+        .news-card,
+        .grade-item,
+        .student-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            will-change: transform;
+        }
+
+        /* Desktop/Laptop hover effects */
+        @media (hover: hover) and (pointer: fine) {
+            .news-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 20px var(--shadow-color);
+            }
+            .grade-item:hover {
+                transform: scale(1.06);
+                box-shadow: 0 6px 16px var(--shadow-color);
+            }
+            .student-item:hover {
+                transform: translateX(4px);
+                box-shadow: 0 4px 12px var(--shadow-color);
+            }
+        }
+
+        /* Gentle continuous animations on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            @keyframes gentleFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-6px); }
+            }
+            @keyframes softPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.035); }
+            }
+            .news-card {
+                animation: gentleFloat 6s ease-in-out infinite;
+            }
+            .news-card:nth-child(odd) {
+                animation-delay: 1.2s;
+            }
+            #gradesSlider .grade-item {
+                animation: softPulse 5.5s ease-in-out infinite;
+            }
+            #gradesSlider .grade-item:nth-child(odd) {
+                animation-delay: 0.9s;
+            }
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .news-card,
+            .grade-item,
+            .student-item { animation: none !important; transition: none; }
+        }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-card">
+            <div class="preloader-logo">MP</div>
+            <div class="preloader-title">Academy</div>
+            <div class="preloader-subtitle">Загрузка интерфейса</div>
+            <div class="preloader-spinner"></div>
+        </div>
+    </div>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
     
     <header class="header">
@@ -1209,10 +1379,10 @@
         
         <div class="sub-nav">
             <div class="sub-nav-container">
-                <a href="#" class="sub-nav-item active" onclick="showSection('personal-cabinet')">Личный кабинет</a>
-                <a href="#" class="sub-nav-item" onclick="showSection('student-list')">Список учеников</a>
-                <a href="#" class="sub-nav-item" onclick="showSection('grades-table')">Оценки</a>
-                <a href="#" class="sub-nav-item" onclick="showSection('news-section')">Новости</a>
+                <a href="#/personal-cabinet" class="sub-nav-item active" onclick="showSection('personal-cabinet')">Личный кабинет</a>
+                <a href="#/student-list" class="sub-nav-item" onclick="showSection('student-list')">Список учеников</a>
+                <a href="#/grades-table" class="sub-nav-item" onclick="showSection('grades-table')">Оценки</a>
+                <a href="#/news-section" class="sub-nav-item" onclick="showSection('news-section')">Новости</a>
             </div>
         </div>
     </header>
@@ -1224,7 +1394,7 @@
                     <div class="student-avatar">MX</div>
                     <div class="student-details">
                         <h3>MalivochikX</h3>
-                        <p>Группа A1</p>
+                        <p>Группа A1 - Сервер 2</p>
                     </div>
                 </div>
             </div>
@@ -1559,7 +1729,7 @@
                             <div class="student-number">1</div>
                             <div class="student-details">
                                 <div class="student-name">Darylmill</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1567,7 +1737,7 @@
                             <div class="student-number">2</div>
                             <div class="student-details">
                                 <div class="student-name">MalivochikX</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1575,7 +1745,7 @@
                             <div class="student-number">3</div>
                             <div class="student-details">
                                 <div class="student-name">NataliJer</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1583,7 +1753,7 @@
                             <div class="student-number">4</div>
                             <div class="student-details">
                                 <div class="student-name">KillasBoom</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1591,7 +1761,7 @@
                             <div class="student-number">5</div>
                             <div class="student-details">
                                 <div class="student-name">Sp1xee</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1599,7 +1769,7 @@
                             <div class="student-number">6</div>
                             <div class="student-details">
                                 <div class="student-name">NightEmpress</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1607,7 +1777,7 @@
                             <div class="student-number">7</div>
                             <div class="student-details">
                                 <div class="student-name">Abobus</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1615,7 +1785,7 @@
                             <div class="student-number">8</div>
                             <div class="student-details">
                                 <div class="student-name">Makan</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1623,7 +1793,7 @@
                             <div class="student-number">9</div>
                             <div class="student-details">
                                 <div class="student-name">Кобяков</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
 
@@ -1631,7 +1801,7 @@
                             <div class="student-number">10</div>
                             <div class="student-details">
                                 <div class="student-name">Бабка из 10 подьезда</div>
-                                <div class="student-class">Группа A1</div>
+                                <div class="student-class">Группа A1 - Сервер 2</div>
                             </div>
                         </div>
                     </div>
@@ -1699,6 +1869,36 @@
             </div>
         </main>
     </div>
+
+    <!-- Bottom Mobile Navigation -->
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="bottom-nav-container">
+            <a href="#/personal-cabinet" class="bottom-nav-item" data-section="personal-cabinet" onclick="showSection('personal-cabinet')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3l9 7-1.5 2L19 11v9h-5v-6H10v6H5v-9L4.5 12 3 10l9-7z" fill="currentColor"/>
+                </svg>
+                <span>Личное</span>
+            </a>
+            <a href="#/student-list" class="bottom-nav-item" data-section="student-list" onclick="showSection('student-list')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4S8 5.79 8 8s1.79 4 4 4zm0 2c-3.33 0-6 1.34-6 3v3h12v-3c0-1.66-2.67-3-6-3z" fill="currentColor"/>
+                </svg>
+                <span>Ученики</span>
+            </a>
+            <a href="#/grades-table" class="bottom-nav-item" data-section="grades-table" onclick="showSection('grades-table')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 3h18v2H3V3zm0 6h10v12H3V9zm12 0h6v12h-6V9z" fill="currentColor"/>
+                </svg>
+                <span>Оценки</span>
+            </a>
+            <a href="#/news-section" class="bottom-nav-item" data-section="news-section" onclick="showSection('news-section')">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 5h16v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 2v12h12V7H6zm2 2h8v2H8V9zm0 4h8v2H8v-2z" fill="currentColor"/>
+                </svg>
+                <span>Новости</span>
+            </a>
+        </div>
+    </nav>
 
     <script>
         let currentGradePosition = 0;
@@ -1838,6 +2038,19 @@
                 activeSubNavItem.classList.add('active');
             }
 
+            // Sync bottom nav active state
+            const bottomItems = document.querySelectorAll('.bottom-nav-item');
+            bottomItems.forEach(i => i.classList.remove('active'));
+            const activeBottom = document.querySelector(`.bottom-nav-item[data-section="${sectionId}"]`);
+            if (activeBottom) activeBottom.classList.add('active');
+
+            // Persist current section in URL hash and localStorage
+            localStorage.setItem('activeSection', sectionId);
+            const desiredHash = `#/` + sectionId;
+            if (location.hash !== desiredHash) {
+                location.hash = desiredHash;
+            }
+
             if (window.innerWidth <= 768) {
                 closeMobileSidebar();
             }
@@ -1881,9 +2094,24 @@
             }
         }
 
+        // Helper to read sectionId from hash like #/news-section
+        function getSectionFromHash() {
+            if (!location.hash) return '';
+            const hash = location.hash.replace(/^#\//, '').trim();
+            return hash;
+        }
+
         window.addEventListener('load', function() {
-            showSection('personal-cabinet');
-            
+            // Smoothly hide preloader after 5 seconds
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                const DURATION_MS = 400;
+                setTimeout(() => {
+                    preloader.classList.add('hide');
+                    setTimeout(() => { preloader.style.display = 'none'; }, 450);
+                }, DURATION_MS);
+            }
+
             const gradeSlider = document.getElementById('gradesSlider');
             const gradeContainer = gradeSlider.parentElement;
             const gradePrevBtn = gradeContainer.querySelector('.prev');
@@ -1913,8 +2141,24 @@
                 themeIcon.textContent = '☀️';
                 themeText.textContent = 'Светлая';
             }
-            
-            showSection('personal-cabinet');
+
+            // Initialize section: hash > localStorage > default
+            const fromHash = getSectionFromHash();
+            const fromStorage = localStorage.getItem('activeSection') || '';
+            const initialSection = fromHash || fromStorage || 'personal-cabinet';
+            showSection(initialSection);
+
+            // Initialize bottom nav active state
+            const activeBottom = document.querySelector(`.bottom-nav-item[data-section="${initialSection}"]`);
+            if (activeBottom) activeBottom.classList.add('active');
+
+            // Keep UI in sync with hash changes (e.g., back/forward navigation)
+            window.addEventListener('hashchange', function() {
+                const id = getSectionFromHash();
+                if (id) {
+                    showSection(id);
+                }
+            });
         });
 
         window.addEventListener('resize', function() {
